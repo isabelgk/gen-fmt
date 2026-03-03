@@ -1,0 +1,19 @@
+[package]
+name = "gen-fmt"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "gen-fmt"
+path = "src/main.rs"
+
+[lib]
+name = "gen_fmt"
+path = "src/lib.rs"
+
+[dependencies]
+topiary-core = "0.5"
+topiary-tree-sitter-facade = "0.5"
+tree-sitter-genexpr = { git = "https://github.com/isabelgk/tree-sitter-genexpr" }
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
