@@ -252,6 +252,7 @@ dependencies = [
  "thiserror",
  "topiary-core",
  "topiary-tree-sitter-facade",
+ "tree-sitter",
  "tree-sitter-genexpr",
 ]
 

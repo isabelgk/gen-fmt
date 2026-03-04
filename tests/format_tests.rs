@@ -25,4 +25,5 @@ fmt_test!(polymorphic_ops);
 fmt_test!(all_declarations);
 fmt_test!(default_params);
 fmt_test!(inline_if);
+fmt_test!(brace_insertion);
 fmt_test!(number_literals);

@@ -14,6 +14,7 @@ path = "src/lib.rs"
 [dependencies]
 topiary-core = "0.5"
 topiary-tree-sitter-facade = "0.5"
+tree-sitter = "0.22"
 tree-sitter-genexpr = { git = "https://github.com/isabelgk/tree-sitter-genexpr" }
 clap = { version = "4", features = ["derive"] }
 thiserror = "1"

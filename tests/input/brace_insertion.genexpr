@@ -1,0 +1,9 @@
+slide(inputSample) {
+	if ((inputSample - lastSample) < 0.0)
+		lastSample += (inputSample - lastSample) / maximum(1.0, slideDownValue);
+	else if ((inputSample - lastSample) > 0.0)
+		lastSample += (inputSample - lastSample) / maximum(1.0, slideUpValue);
+	else
+		lastSample = inputSample;
+	return lastSample;
+}
