@@ -76,5 +76,10 @@
 "(" @append_antispace
 ")" @prepend_antispace
 
+; Control flow condition closing paren: space before inline body
+(selection_statement ")" @append_space)
+(while_statement ")" @append_space)
+(for_statement ")" @append_space)
+
 ; require directives: newline after each
 (compiler_command) @append_hardline
