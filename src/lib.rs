@@ -11,7 +11,11 @@ pub enum Error {
     Utf8(#[from] std::string::FromUtf8Error),
 }
 
-pub fn format_str(input: &str) -> Result<String, Error> {
+pub fn format_str(
+    input: &str,
+    skip_idempotence: bool,
+    tolerate_parsing_errors: bool,
+) -> Result<String, Error> {
     let grammar: TsLanguage = tree_sitter_genexpr::language().into();
     let query = TopiaryQuery::new(&grammar, QUERY)?;
     let language = Language {
@@ -26,8 +30,8 @@ pub fn format_str(input: &str) -> Result<String, Error> {
         &mut output,
         &language,
         Operation::Format {
-            skip_idempotence: false,
-            tolerate_parsing_errors: false,
+            skip_idempotence,
+            tolerate_parsing_errors,
         },
     )?;
     Ok(String::from_utf8(output)?)

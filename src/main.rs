@@ -13,6 +13,12 @@ struct Args {
     /// Write result back to file in place
     #[arg(short = 'i', long)]
     in_place: bool,
+    /// Skip idempotence check
+    #[arg(long)]
+    skip_idempotence: bool,
+    /// Tolerate parsing errors
+    #[arg(long)]
+    tolerate_parsing_errors: bool,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -21,12 +27,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if args.files.is_empty() {
         let mut input = String::new();
         io::stdin().read_to_string(&mut input)?;
-        let formatted = gen_fmt::format_str(&input)?;
+        let formatted = gen_fmt::format_str(&input, args.skip_idempotence, args.tolerate_parsing_errors)?;
         io::stdout().write_all(formatted.as_bytes())?;
     } else {
         for path in &args.files {
             let input = fs::read_to_string(path)?;
-            let formatted = gen_fmt::format_str(&input)?;
+            let formatted = gen_fmt::format_str(&input, args.skip_idempotence, args.tolerate_parsing_errors)?;
             if args.in_place {
                 fs::write(path, &formatted)?;
             } else {
