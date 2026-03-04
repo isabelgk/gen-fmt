@@ -1,4 +1,3 @@
-use anyhow::Result;
 use clap::Parser;
 use std::{
     fs,
@@ -16,7 +15,7 @@ struct Args {
     in_place: bool,
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
 
     if args.files.is_empty() {

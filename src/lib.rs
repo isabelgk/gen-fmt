@@ -1,13 +1,19 @@
-use anyhow::Result;
-use topiary_core::{formatter, Language, Operation, TopiaryQuery};
+use topiary_core::{formatter, FormatterError, Language, Operation, TopiaryQuery};
 use topiary_tree_sitter_facade::Language as TsLanguage;
 
 const QUERY: &str = include_str!("../queries/genexpr.scm");
 
-pub fn format_str(input: &str) -> Result<String> {
+#[derive(Debug, thiserror::Error)]
+pub enum Error {
+    #[error(transparent)]
+    Topiary(#[from] FormatterError),
+    #[error(transparent)]
+    Utf8(#[from] std::string::FromUtf8Error),
+}
+
+pub fn format_str(input: &str) -> Result<String, Error> {
     let grammar: TsLanguage = tree_sitter_genexpr::language().into();
-    let query = TopiaryQuery::new(&grammar, QUERY)
-        .map_err(|e| anyhow::anyhow!("{}", e))?;
+    let query = TopiaryQuery::new(&grammar, QUERY)?;
     let language = Language {
         name: "genexpr".to_string(),
         query,
@@ -23,7 +29,6 @@ pub fn format_str(input: &str) -> Result<String> {
             skip_idempotence: false,
             tolerate_parsing_errors: false,
         },
-    )
-    .map_err(|e| anyhow::anyhow!("{}", e))?;
+    )?;
     Ok(String::from_utf8(output)?)
 }
