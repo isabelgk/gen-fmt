@@ -1,3 +1,5 @@
+pub mod ffi;
+
 use topiary_core::{formatter, FormatterError, Language, Operation, TopiaryQuery};
 use topiary_tree_sitter_facade::Language as TsLanguage;
 use tree_sitter::{Node, Parser};

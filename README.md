@@ -44,6 +44,47 @@ Read from stdin:
 cat patch.genexpr | gen-fmt
 ```
 
+## C library
+
+gen-fmt can be built as a C-compatible library for embedding in C (or C++) programs.
+
+### Build
+
+```sh
+cargo build --release
+```
+
+This produces:
+
+- `target/release/libgen_fmt.dylib` (macOS) / `libgen_fmt.so` (Linux) — dynamic library
+- `target/release/libgen_fmt.a` — static library
+
+### API
+
+Include `include/gen_fmt.h` and link against one of the above:
+
+```c
+#include "include/gen_fmt.h"
+
+char *result = gen_fmt_format(input, 0, 0);
+if (result) {
+    // use result...
+    gen_fmt_free(result);
+}
+```
+
+`gen_fmt_format` returns a newly-allocated string on success, or `NULL` on error. Always free it with `gen_fmt_free` instead of  `free()`.
+
+### Link
+
+```sh
+# dynamic
+cc main.c -Iinclude -Ltarget/release -lgen_fmt -o main
+
+# static
+cc main.c -Iinclude target/release/libgen_fmt.a -o main
+```
+
 ## Configuration
 
 gen-fmt currently has no user-configurable options. Support for customizing formatting style is planned.
