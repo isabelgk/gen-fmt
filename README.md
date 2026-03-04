@@ -44,6 +44,10 @@ Read from stdin:
 cat patch.genexpr | gen-fmt
 ```
 
+## Configuration
+
+gen-fmt currently has no user-configurable options. Support for customizing formatting style is planned.
+
 ## Development
 
 ```sh
