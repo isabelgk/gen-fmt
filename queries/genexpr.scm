@@ -20,9 +20,17 @@
 ; Commas: no space before, one space after
 "," @prepend_antispace @append_space
 
-; Semicolons: no space before, newline after
-; NOTE: this also applies inside for() headers — fix if for loops are needed
-";" @prepend_antispace @append_hardline
+; for() header semicolons: no space before, space after
+(for_statement ";" @prepend_antispace @append_space)
+
+; Other emicolons: no space before, newline after
+(declaration ";" @prepend_antispace @append_hardline)
+(expr_statement_list ";" @prepend_antispace @append_hardline)
+(statement ";" @prepend_antispace @append_hardline)
+(continue_statement ";" @prepend_antispace @append_hardline)
+(break_statement ";" @prepend_antispace @append_hardline)
+(return_statement ";" @prepend_antispace @append_hardline)
+(do_statement ";" @prepend_antispace @append_hardline)
 
 ; Function declaration bodies: indent between braces
 (function_declaration

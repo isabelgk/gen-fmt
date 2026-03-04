@@ -30,10 +30,6 @@ Read from stdin:
 cat patch.genexpr | gen-fmt
 ```
 
-## Limitations
-
-`for` loop headers (`for (a; b; c)`) are not yet formatted correctly — semicolons inside the header get a newline appended. Avoid `for` loops or fix them manually for now.
-
 ## Development
 
 ```sh
@@ -42,4 +38,3 @@ cargo build      # compile
 ```
 
 Formatting rules live in `queries/genexpr.scm`.
-
