@@ -38,11 +38,15 @@ jobs:
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
 
+      - name: Rename binary
+        shell: bash
+        run: cp target/${{ matrix.target }}/release/${{ matrix.binary }} ${{ matrix.asset }}
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.asset }}
-          path: target/${{ matrix.target }}/release/${{ matrix.binary }}
+          path: ${{ matrix.asset }}
 
   build-lib:
     name: build lib (${{ matrix.target }})
