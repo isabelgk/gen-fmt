@@ -1,22 +1,46 @@
-Abs(x){
-History prev(0);
-out1=x>0?x:0;
-prev=out1;
-}
-
-Clamp(x,lo,hi){
+foo(x,lo,hi){
 if(x<lo){
-out1=lo;
-}else{
-out1=x;
+return lo;
+}
+else if(x>hi ){
+return hi ;
+}
+else{
+ return x;
 }
 }
 
-Sum(n){
-History total(0);
-History i(0);
-while(i<n){ total=total+i; i=i+1; out1=total;
-}}
+bar(input,a0,a1,a2,b1,  b2){
+    History x1(0.0), x2(0.0), y1(0.0), y2(0.0);
 
-out1=Abs(in1);
-out2=Clamp(in2,0,1);
+	tmp = input * a0 + x1*a1 + x2 * a2 -(y1 *b1 +y2 *b2);
+	x2 = x1;
+	x1 = input; y2 = y1; y1 = tmp;
+return tmp;
+}
+average(inputSample,windowSizeInSamples)
+{
+    Delay lastValues(samplerate,interp= "none");
+    History accumulation(0);
+    History windowSizeLast(0); History count(0);
+
+    // Reset accumulation and count when window size changes
+    if (windowSizeLast != windowSizeInSamples) {
+        accumulation = 0;
+        count = 0;
+        windowSizeLast = windowSizeInSamples;
+    }
+
+    count = minimum(count, windowSizeInSamples);
+    if (count==windowSizeInSamples) {
+        accumulation -= lastValues.read(count); count -=1;
+    }
+
+    accumulation += inputSample;
+    lastValues.write(inputSample);
+    count += 1;
+    return accumulation / count;
+}
+
+out1=foo(in1);
+out2=bar(in2,0.5,0.5,0,0.25,0.75);
