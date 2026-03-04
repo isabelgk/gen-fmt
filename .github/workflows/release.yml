@@ -54,7 +54,7 @@ jobs:
             target: aarch64-apple-darwin
             lib: libgen_fmt.a
             archive: gen-fmt-macos-arm64.tar.gz
-          - os: macos-13
+          - os: macos-latest
             target: x86_64-apple-darwin
             lib: libgen_fmt.a
             archive: gen-fmt-macos-x86_64.tar.gz
