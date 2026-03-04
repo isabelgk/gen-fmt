@@ -1,0 +1,8 @@
+declTest(){
+param rate(44100);
+buffer buf("b");
+data tbl(512);
+Delay d(1000);
+History h(0);
+return h;
+}

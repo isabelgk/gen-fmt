@@ -1,0 +1,6 @@
+clamp(x, lo, hi) {
+    return x < lo ? lo : x > hi ? hi : x;
+}
+sign(x) {
+    return x > 0 ? 1 : x < 0 ? -1 : 0;
+}

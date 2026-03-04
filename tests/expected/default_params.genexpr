@@ -1,0 +1,3 @@
+filter(input, freq=440, q=0.5, type="lowpass") {
+    return input * freq * q;
+}

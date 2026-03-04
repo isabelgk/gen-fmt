@@ -1,0 +1,5 @@
+/* A simple passthrough function */
+pass(x) {
+    /* scale and return */
+    return x * 1.0;
+}

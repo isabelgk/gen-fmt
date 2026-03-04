@@ -1,0 +1,7 @@
+readBuf(buf,i){
+return peek(buf,i);
+}
+writeBuf(buf,i,val){
+poke(val,buf,i);
+return peek(buf,i+1);
+}

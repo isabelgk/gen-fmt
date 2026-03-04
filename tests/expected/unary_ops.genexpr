@@ -1,0 +1,10 @@
+negate(x) {
+    return -x;
+}
+logicalNot(x) {
+    return !x;
+}
+combined(x, y) {
+    z = -x + ~y;
+    return !z;
+}

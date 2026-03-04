@@ -1,0 +1,9 @@
+polyCompare(a,b){
+x=a==pb;
+y=a!=pb;
+z=a<pb;
+w=a>pb;
+v=a<=pb;
+u=a>=pb;
+return x+y+z+w+v+u;
+}

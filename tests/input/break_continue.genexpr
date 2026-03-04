@@ -1,0 +1,12 @@
+findFirst(n){
+for(i=0;i<n;i+=1){
+if(i==5){
+break;
+}
+if(i==3){
+continue;
+}
+acc+=i;
+}
+return acc;
+}

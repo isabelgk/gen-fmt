@@ -1,3 +1,5 @@
+require("math");
+
 foo(x,lo,hi){
 if(x<lo){
 return lo;
@@ -42,5 +44,55 @@ average(inputSample,windowSizeInSamples)
     return accumulation / count;
 }
 
-out1=foo(in1);
+/* running maximum with optional decay */
+runningMax(x,decay){
+History peak(0);
+peak=peak>x?peak*decay:x;
+return peak;
+}
+
+countUp(limit){
+History n(0);
+while(n<limit){
+n+=1;
+}
+return n;
+}
+
+countDown(start){
+start-=1;
+while(start>0){
+start-=1;
+}
+return start;
+}
+
+firstBelow(threshold,n){
+for(i=0;i<n;i+=1){
+if(in1<threshold){
+break;
+}
+if(in1>threshold*2){
+continue;
+}
+}
+return i;
+}
+
+swapPair(a,b){
+a,b=b,a;
+return a+b;
+}
+
+polyTest(a,b){
+buffer buf(1024);
+data tbl(512);
+x=a==pb;
+y=a!=pb;
+z=a<pb||a>pb;
+w=a&&!b;
+return x+y+z+w;
+}
+
+out1=foo(in1,0.0,1.0);
 out2=bar(in2,0.5,0.5,0,0.25,0.75);

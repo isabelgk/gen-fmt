@@ -1,0 +1,6 @@
+countdown(start) {
+    while (start > 0) {
+        start = start - 1;
+    }
+    return start;
+}

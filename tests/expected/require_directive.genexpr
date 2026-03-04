@@ -1,0 +1,5 @@
+require("foo");
+require("bar/baz");
+identity(x) {
+    return x;
+}

@@ -1,0 +1,9 @@
+polyCompare(a, b) {
+    x = a ==p b;
+    y = a !=p b;
+    z = a <p b;
+    w = a >p b;
+    v = a <=p b;
+    u = a >=p b;
+    return x + y + z + w + v + u;
+}
