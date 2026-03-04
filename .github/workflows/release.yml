@@ -7,8 +7,8 @@ on:
       - "v*"
 
 jobs:
-  build:
-    name: build (${{ matrix.target }})
+  build-cli:
+    name: build cli (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -43,3 +43,80 @@ jobs:
         with:
           name: ${{ matrix.asset }}
           path: target/${{ matrix.target }}/release/${{ matrix.binary }}
+
+  build-lib:
+    name: build lib (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            lib: libgen_fmt.a
+            archive: gen-fmt-macos-arm64.tar.gz
+          - os: macos-13
+            target: x86_64-apple-darwin
+            lib: libgen_fmt.a
+            archive: gen-fmt-macos-x86_64.tar.gz
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            lib: gen_fmt.lib
+            archive: gen-fmt-windows-x64.zip
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build static library
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Package (macOS/Linux)
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p dist/include dist/lib
+          cp include/gen_fmt.h dist/include/
+          cp target/${{ matrix.target }}/release/${{ matrix.lib }} dist/lib/
+          tar -czf ${{ matrix.archive }} -C dist .
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          New-Item -ItemType Directory -Force -Path dist/include, dist/lib
+          Copy-Item include/gen_fmt.h dist/include/
+          Copy-Item target/${{ matrix.target }}/release/${{ matrix.lib }} dist/lib/
+          Compress-Archive -Path dist/* -DestinationPath ${{ matrix.archive }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.archive }}
+          path: ${{ matrix.archive }}
+
+  release:
+    name: create release
+    needs: [build-cli, build-lib]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --generate-notes \
+            artifacts/*
