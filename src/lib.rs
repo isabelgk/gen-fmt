@@ -18,7 +18,7 @@ pub fn format_str(input: &str) -> Result<String, Error> {
         name: "genexpr".to_string(),
         query,
         grammar,
-        indent: None,
+        indent: Some("    ".to_string()),
     };
     let mut output = Vec::new();
     formatter(

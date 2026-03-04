@@ -31,8 +31,9 @@
 )
 
 ; Control flow blocks (compound_statement used by if/while/do bodies)
+; NOTE: no @append_hardline on "}" — adding it would break "} else {" formatting
 (compound_statement
-  "{" @append_hardline @append_indent_start
+  "{" @prepend_space @append_hardline @append_indent_start
   "}" @prepend_hardline @prepend_indent_end
 )
 
