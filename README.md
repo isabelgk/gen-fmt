@@ -6,9 +6,23 @@ Built on [Topiary](https://github.com/tweag/topiary) and [tree-sitter-genexpr](h
 
 ## Install
 
+### From source
+
 ```sh
 cargo install --path .
 ```
+
+### Pre-built binaries
+
+Pre-built binaries are available on the [releases page](https://github.com/isabelgk/gen-fmt/releases).
+
+On macOS, downloaded binaries will be blocked by Gatekeeper. To allow it:
+
+```sh
+xattr -d com.apple.quarantine gen-fmt
+```
+
+Or right-click the binary in Finder and choose Open.
 
 ## Usage
 
